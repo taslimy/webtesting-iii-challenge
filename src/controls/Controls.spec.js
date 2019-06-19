@@ -17,11 +17,45 @@ describe("<Control />", () => {
     const { container } = render(<Control />);
     expect(container).toMatchSnapshot();
   });
+});
 
-  it("should toggle the correct button actions", () => {
+describe("open and close the gate", () => {
+  it("should open gate", () => {
     const { getByText } = render(<Dashboard />);
+    const openGate = getByText(/Close Gate/);
+    fireEvent.click(openGate);
+  });
 
-    const closeGate = getByText(/Closed/);
-    const lockGate = getByText(/Locked/);
+  it("should close gate", () => {
+    const { getByText } = render(<Dashboard />);
+    const lockGate = getByText(/Lock Gate/);
+
+    fireEvent.click(lockGate);
+  });
+});
+
+describe("should lock and unlock gate", () => {
+  it("should lock the gate", () => {
+    const { getByText } = render(<Dashboard />);
+    const closeGate = getByText(/Close Gate/);
+    const lockGate = getByText(/Lock Gate/);
+
+    fireEvent.click(closeGate);
+    getByText(/Open Gate/);
+
+    fireEvent.click(lockGate);
+    getByText(/Unlock Gate/);
+  });
+
+  it("should unlock", () => {
+    const { getByText } = render(<Dashboard />);
+    const closeGate = getByText(/Close Gate/);
+    const lockGate = getByText(/Lock Gate/);
+
+    fireEvent.click(closeGate);
+    getByText(/Open Gate/);
+
+    fireEvent.click(lockGate);
+    getByText(/Unlock Gate/);
   });
 });
